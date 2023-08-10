@@ -1,0 +1,43 @@
+1. created ec2 instance and vpc
+2. connect the instance through Ec2 Instance connect
+3.checking whether ansible is installed or not
+after installed created a playbook folder in /home/ubuntu
+in playbook folder created files for configuration, hosts, playbook.yaml
+and changing the directory to ~/.ssh
+created a ssk key using command ssh-keygen -t rsa -b 4096 
+and then added the public key to my repository
+and then i added the ssk key using ssh-add id_rsa 
+
+Again changed the directory where playbook presents 
+run the command
+ansible-playbook playbook.yaml -v
+
+root@ip-192-168-1-208:/home/ubuntu/playboohs# ansible-playbook -u ubuntu playbook.yaml -v
+Using /home/ubuntu/playboohs/ansible.cfg as config file
+
+PLAY [Fetch and Copy File from GitHub] ******************************************************************************************************************************
+
+TASK [Fetch the file from GitHub] ***********************************************************************************************************************************
+fatal: [3.73.135.106]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: ubuntu@3.73.135.106: Permission denied (publickey).", "unreachable": true}
+
+PLAY RECAP **********************************************************************************************************************************************************
+3.73.135.106               : ok=0    changed=0    unreachable=1    failed=0    skipped=0    rescued=0    ignored=0  
+
+
+
+ansible-pull -U https://github.com/Lellasubhasri/html.git -i localhost —private-key asdfghj.pem playbook.yaml -v
+Using /home/ubuntu/playboohs/ansible.cfg as config file
+Starting Ansible Pull at 2023-08-10 09:04:59
+/usr/bin/ansible-pull -U https://github.com/Lellasubhasri/html.git -i localhost —private-key asdfghj.pem playbook.yaml -v
+[WARNING]: /root/.ansible/pull/ip-192-168-1-208/—private-key: File does not exist /root/.ansible/pull/ip-192-168-1-208/asdfghj.pem: File does not exist
+/root/.ansible/pull/ip-192-168-1-208/playbook.yaml: File does not exist
+[WARNING]: Could not match supplied host pattern, ignoring: ip-192-168-1-208
+Using /home/ubuntu/playboohs/ansible.cfg as config file
+localhost | SUCCESS => {
+    "after": "869504f7be690162c1eb192f9a992bec565e9847",
+    "before": "869504f7be690162c1eb192f9a992bec565e9847",
+    "changed": false,
+    "remote_url_changed": false
+}
+
+ERROR! Could not find a playbook to run.

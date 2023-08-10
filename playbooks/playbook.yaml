@@ -1,0 +1,18 @@
+---
+- name: Fetch and Copy File from GitHub
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Fetch the file from GitHub
+      become: no
+      vars:
+        github_repo: "https://github.com/Lellasubhasri/html.git"
+        github_file_path: "https://github.com/Lellasubhasri/html/blob/main/ex.html"
+      raw: "curl -s {{ github_repo }}/raw/master/{{ github_file_path }}"
+      register: github_file_content
+
+    - name: Write the file locally
+      copy:
+        content: "{{ github_file_content.stdout }}"
+        dest: "/home/ubuntu/playboohs/copy.html"
+      delegate_to: localhost
